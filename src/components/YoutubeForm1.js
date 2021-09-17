@@ -66,7 +66,11 @@ function YoutubeForm1() {
         validationSchema={validationSchema}
         validate ={customValidation}
         >
-            <Form>
+        {
+            formik =>{
+                console.dir(formik);
+                return(
+                    <Form>
                 <div className="form-control">
                     <label htmlFor='name'>Name</label>
                     <Field name='name' id='name' type='text'/>
@@ -164,6 +168,9 @@ function YoutubeForm1() {
                 <button type='submit'>Submit</button>
             </Form>
             
+                )
+            }
+        }
         </Formik>
     )
 }
