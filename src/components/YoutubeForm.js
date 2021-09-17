@@ -6,7 +6,8 @@ import TextError from './TextError';
 const initialValues ={
     name:'',
     email:'',
-    channel:''
+    channel:'',
+    comments:'',
 }
 
 const submitHandler=(values)=>{
@@ -17,6 +18,7 @@ const validationSchema =yup.object({
     name:yup.string().required("Required!"),
     email:yup.string().email('Email format is not valid!').required('Required!'),
     channel:yup.string().required('Required!'),
+    comments:yup.string().required('Required!')
 })
 
 
@@ -44,8 +46,14 @@ function YoutubeForm() {
                 </div>
                 <div className="form-control">
                     <label htmlFor='channel'>Name</label>
-                    <Field name='channel' id='channel' type='text'/>
-                    <ErrorMessage name='channel'/>
+                    <Field name='channel' id='channel' type='text' placeholder ='Youtube Channel Name....'/>
+                    <ErrorMessage name='channel' component={TextError}/>
+                </div>
+
+                <div className="form-control">
+                    <label htmlFor='comments'>Comments</label>
+                    <Field name='comments' id ='comments' as='textarea'/>
+                    <ErrorMessage name='comments' component={TextError}/>
                 </div>
 
                 <button type='submit'>Submit</button>
