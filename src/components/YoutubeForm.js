@@ -1,5 +1,5 @@
 import React from 'react';
-import {Formik,Form,Field,ErrorMessage} from 'formik';
+import {Formik,Form,Field,ErrorMessage,FieldArray} from 'formik';
 import * as yup from 'yup';
 import TextError from './TextError';
 
@@ -13,7 +13,8 @@ const initialValues ={
         facebook:'',
         twitter:''
     },
-    phoneNumbers:['','']
+    phoneNumbers:['',''],
+    phNumbers:['']
 }
 
 const submitHandler=(values)=>{
@@ -31,7 +32,10 @@ const validationSchema =yup.object({
         twitter:yup.string().url("Please enter a valid twitter url").required('Required!')
     }),
     phoneNumbers:yup.array().of(
-        yup.string().required('').min(10,"Must be 10 digit").required('Required!')
+        yup.string().min(10,"Must be more then 10 digit").required('Required!')
+    ),
+    phNumbers:yup.array().of(
+        yup.string().min(5,"Must be 5 digit").max(5,"Must be 5 digit").required('Required!')
     )
 })
 
@@ -109,6 +113,34 @@ function YoutubeForm() {
                     <Field name='phoneNumbers[1]' id ='sNumber' type='text'/>
                     <ErrorMessage name='phoneNumbers[1]' component={TextError}/>
                 </div>
+
+                <div className="form-control">
+                    <label htmlFor='sNumber'>Multiples Numbers</label>
+                    <FieldArray name='phNumbers'>
+                    { props =>{
+                        //console.dir(props);
+                        const {insert,remove,form} = props;
+                        const {values} = form;
+                        const {phNumbers} = values;
+                        return(
+                        <div>
+                            {phNumbers.map((p,index)=>
+                            <div key={index}>
+                                {index > 0 &&
+                                 <button onClick={()=>remove(index)}>{ '-' }</button>
+                                 }
+                                 <Field name={`phNumbers[${index}]`}/>
+                                 <button onClick={()=>insert(index+1,'')}>{ '+' }</button>
+                                 <ErrorMessage name={`phNumbers[${index}]`} component={TextError}/>
+                            </div>
+                            )}
+                        </div>
+                        )
+                    }}
+                    </FieldArray>
+                </div>
+
+
 
                 <button type='submit'>Submit</button>
             </Form>
