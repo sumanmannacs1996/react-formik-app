@@ -12,7 +12,8 @@ const initialValues ={
     social:{
         facebook:'',
         twitter:''
-    }
+    },
+    phoneNumbers:['','']
 }
 
 const submitHandler=(values)=>{
@@ -28,7 +29,10 @@ const validationSchema =yup.object({
     social:yup.object({
         facebook:yup.string().url("Please enter a valid facebook url").required('Required!'),
         twitter:yup.string().url("Please enter a valid twitter url").required('Required!')
-    })
+    }),
+    phoneNumbers:yup.array().of(
+        yup.string().required('').min(10,"Must be 10 digit").required('Required!')
+    )
 })
 
 
@@ -93,6 +97,17 @@ function YoutubeForm() {
                     <label htmlFor='twitter'>Twitter Url</label>
                     <Field name='social.twitter' id ='twitter' type='url'/>
                     <ErrorMessage name='social.twitter' component={TextError}/>
+                </div>
+
+                <div className="form-control">
+                    <label htmlFor='pNumber'>Primary Number</label>
+                    <Field name='phoneNumbers[0]' id ='pNumber' type='text'/>
+                    <ErrorMessage name='phoneNumbers[0]' component={TextError}/>
+                </div>
+                <div className="form-control">
+                    <label htmlFor='sNumber'>Secondary Number</label>
+                    <Field name='phoneNumbers[1]' id ='sNumber' type='text'/>
+                    <ErrorMessage name='phoneNumbers[1]' component={TextError}/>
                 </div>
 
                 <button type='submit'>Submit</button>
