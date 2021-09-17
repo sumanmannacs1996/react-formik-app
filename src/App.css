@@ -28,4 +28,5 @@ textarea {
 }
 .form-control .form-error {
  color: red;
+ font-size: 10px;
 }
