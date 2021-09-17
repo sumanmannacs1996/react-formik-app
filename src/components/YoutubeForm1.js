@@ -17,8 +17,15 @@ const initialValues ={
     phNumbers:['']
 }
 
-const submitHandler=(values)=>{
+const submitHandler=(values,onSubmitProps)=>{
     console.dir(values);
+    {
+        //Set agin submit button to enable in case api assync called failed so that user can agin try to submit the form
+        setTimeout(()=>{
+            onSubmitProps.setSubmitting(false);
+        },3000)
+    }
+
 }
 
 const validationSchema =yup.object({
@@ -163,7 +170,7 @@ function YoutubeForm1() {
                     </FieldArray>
                 </div>
 
-                <button type='submit' disabled={!(formik.isValid && formik.dirty)}>Submit</button>
+                <button type='submit' disabled={!(formik.isValid && formik.dirty) || formik.isSubmitting}>Submit</button>
             </Form>
             
                 )
