@@ -39,6 +39,13 @@ const validationSchema =yup.object({
     )
 })
 
+const validateComments =(value)=>{
+    let error
+    if(value !== 'My Comments')
+        error = 'Please Type => My Comments';
+    return error;
+}
+
 
 function YoutubeForm() {
     return (
@@ -70,7 +77,7 @@ function YoutubeForm() {
 
                 <div className="form-control">
                     <label htmlFor='comments'>Comments</label>
-                    <Field name='comments' id ='comments' as='textarea'/>
+                    <Field name='comments' id ='comments' as='textarea' validate ={validateComments}/>
                     <ErrorMessage name='comments' component={TextError}/>
                 </div>
 
