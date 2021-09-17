@@ -46,6 +46,17 @@ const validateComments =(value)=>{
     return error;
 }
 
+//This code will run every time when we interact to the form
+//and in the values property it has access to all attributes value 
+const customValidation=(values)=>{
+    console.dir(values);
+    let errors ={};
+    if(values.comments !== values.channel){
+        errors.comments = 'It is not same to Channel Name!';
+    }
+    return errors;
+}
+
 
 function YoutubeForm() {
     return (
@@ -53,6 +64,7 @@ function YoutubeForm() {
         initialValues={initialValues}
         onSubmit={submitHandler}
         validationSchema={validationSchema}
+        validate ={customValidation}
         >
             <Form>
                 <div className="form-control">
