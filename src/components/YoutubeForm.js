@@ -9,6 +9,10 @@ const initialValues ={
     channel:'',
     comments:'',
     address:'',
+    social:{
+        facebook:'',
+        twitter:''
+    }
 }
 
 const submitHandler=(values)=>{
@@ -20,7 +24,11 @@ const validationSchema =yup.object({
     email:yup.string().email('Email format is not valid!').required('Required!'),
     channel:yup.string().required('Required!'),
     comments:yup.string().required('Required!'),
-    address:yup.string().required('Required!')
+    address:yup.string().required('Required!'),
+    social:yup.object({
+        facebook:yup.string().url("Please enter a valid facebook url").required('Required!'),
+        twitter:yup.string().url("Please enter a valid twitter url").required('Required!')
+    })
 })
 
 
@@ -47,7 +55,7 @@ function YoutubeForm() {
                     </ErrorMessage>
                 </div>
                 <div className="form-control">
-                    <label htmlFor='channel'>Name</label>
+                    <label htmlFor='channel'>Channel</label>
                     <Field name='channel' id='channel' type='text' placeholder ='Youtube Channel Name....'/>
                     <ErrorMessage name='channel' component={TextError}/>
                 </div>
@@ -62,7 +70,7 @@ function YoutubeForm() {
                     <label htmlFor='address'>Address</label>
                     <Field name='address'>
                         {props =>{
-                            console.dir(props);
+                            //console.dir(props);
                             const {field,form,meta} = props;
                             return(
                             <div>
@@ -74,6 +82,17 @@ function YoutubeForm() {
                             )
                         }}
                     </Field>
+                </div>
+
+                <div className="form-control">
+                    <label htmlFor='facebook'>Facebook Url</label>
+                    <Field name='social.facebook' id ='facebook' type='url'/>
+                    <ErrorMessage name='social.facebook' component={TextError}/>
+                </div>
+                <div className="form-control">
+                    <label htmlFor='twitter'>Twitter Url</label>
+                    <Field name='social.twitter' id ='twitter' type='url'/>
+                    <ErrorMessage name='social.twitter' component={TextError}/>
                 </div>
 
                 <button type='submit'>Submit</button>
