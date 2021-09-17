@@ -163,9 +163,7 @@ function YoutubeForm1() {
                     </FieldArray>
                 </div>
 
-
-
-                <button type='submit'>Submit</button>
+                <button type='submit' disabled={!(formik.isValid && formik.dirty)}>Submit</button>
             </Form>
             
                 )
