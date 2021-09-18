@@ -3,6 +3,7 @@ import YoutubeForm from './components/YoutubeForm';
 import YoutubeForm1 from './components/YoutubeForm1';
 import FormikContainer from './components/ReusableFormik/FormikContainer';
 import LoginForm from './components/ReusableFormik/LoginForm';
+import RegistrationForm from './components/ReusableFormik/RegistrationForm';
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       {/*<YoutubeForm/> */}
       {/*<YoutubeForm1/> */}
       {/*<FormikContainer/> */}
-      <LoginForm/>
+      {/*<LoginForm/> */}
+      <RegistrationForm/>
     </div>
   );
 }
