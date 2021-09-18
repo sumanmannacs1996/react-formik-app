@@ -31,7 +31,8 @@ function FormikContainer() {
         comments:'',
         selectOption:'',
         radioOption:'',
-        checkboxOption:[]
+        checkboxOption:[],
+        birthDate:null
     }
     const submitHanler=(values)=>{
         console.dir(values);
@@ -42,6 +43,7 @@ function FormikContainer() {
         selectOption:yup.string().required('Please select an option!'),
         radioOption:yup.string().required('Please select one of them!'),
         checkboxOption:yup.array().min(1,'At least one box must be ticked'),
+        birthDate:yup.date().required('Please select the birth date!').nullable()
     })
     return (
         <Formik
@@ -60,6 +62,8 @@ function FormikContainer() {
                 <FormikControl control='radio' name='radioOption' label='Radio Topic' options={radioOptions}/>
 
                 <FormikControl control='checkbox' name='checkboxOption' label='Checkbox Topic' options={checkboxOptions}/>
+
+                <FormikControl control='date' name='birthDate' label='Birth Date'/>
 
                 <button type='submit'>Submit</button>
             </Form>
