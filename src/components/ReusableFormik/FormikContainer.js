@@ -4,6 +4,13 @@ import * as yup from 'yup';
 import FormikControl from './FormikControl';
 
 function FormikContainer() {
+    const checkboxOptions =[
+        {key:'Option 1', value:'cOption1'},
+        {key:'Option 2', value:'cOption2'},
+        {key:'Option 3', value:'cOption3'},
+        {key:'Option 4', value:'cOption4'},
+        {key:'Option 5', value:'cOption5'},
+    ]
     const radioOptions =[
         {key:'Option 1', value:'rOption1'},
         {key:'Option 2', value:'rOption2'},
@@ -23,7 +30,8 @@ function FormikContainer() {
         email:'',
         comments:'',
         selectOption:'',
-        radioOption:''
+        radioOption:'',
+        checkboxOption:[]
     }
     const submitHanler=(values)=>{
         console.dir(values);
@@ -32,7 +40,8 @@ function FormikContainer() {
         email:yup.string().email('Not an email format!').required("Required!"),
         comments:yup.string().min(5,'Minumum 5 character!').required("Require!"),
         selectOption:yup.string().required('Please select an option!'),
-        radioOption:yup.string().required('Please select one of them!')
+        radioOption:yup.string().required('Please select one of them!'),
+        checkboxOption:yup.array().min(1,'At least one box must be ticked'),
     })
     return (
         <Formik
@@ -49,6 +58,8 @@ function FormikContainer() {
                 <FormikControl control='select' name='selectOption' label='Select A Topic' options={dropdownOptions}/>
 
                 <FormikControl control='radio' name='radioOption' label='Radio Topic' options={radioOptions}/>
+
+                <FormikControl control='checkbox' name='checkboxOption' label='Checkbox Topic' options={checkboxOptions}/>
 
                 <button type='submit'>Submit</button>
             </Form>
