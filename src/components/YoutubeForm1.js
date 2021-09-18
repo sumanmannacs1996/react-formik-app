@@ -1,77 +1,90 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {Formik,Form,Field,ErrorMessage,FieldArray} from 'formik';
 import * as yup from 'yup';
 import TextError from './TextError';
 
-const initialValues ={
-    name:'',
-    email:'',
-    channel:'',
-    comments:'',
-    address:'',
-    social:{
-        facebook:'',
-        twitter:''
-    },
-    phoneNumbers:['',''],
-    phNumbers:['']
-}
-
-const submitHandler=(values,onSubmitProps)=>{
-    console.dir(values);
-    {
-        //Set agin submit button to enable in case api assync called failed so that user can agin try to submit the form
-        setTimeout(()=>{
-            onSubmitProps.setSubmitting(false);
-        },3000)
-    }
-
-}
-
-const validationSchema =yup.object({
-    name:yup.string().required("Required!"),
-    email:yup.string().email('Email format is not valid!').required('Required!'),
-    channel:yup.string().required('Required!'),
-    comments:yup.string().required('Required!'),
-    address:yup.string().required('Required!'),
-    social:yup.object({
-        facebook:yup.string().url("Please enter a valid facebook url").required('Required!'),
-        twitter:yup.string().url("Please enter a valid twitter url").required('Required!')
-    }),
-    phoneNumbers:yup.array().of(
-        yup.string().min(10,"Must be more then 10 digit").required('Required!')
-    ),
-    phNumbers:yup.array().of(
-        yup.string().min(5,"Must be 5 digit").max(5,"Must be 5 digit").required('Required!')
-    )
-})
-
-const validateComments =(value)=>{
-    let error
-    if(value !== 'My Comments')
-        error = 'Please Type => My Comments';
-    return error;
-}
-
-//This code will run every time when we interact to the form
-//and in the values property it has access to all attributes value 
-const customValidation=(values)=>{
-    console.dir(values);
-    let errors ={};
-    if(values.comments !== values.channel){
-        errors.comments = 'It is not same to Channel Name!';
-    }
-    return errors;
-}
-
-
 function YoutubeForm1() {
+    const [formValue,setFormValue] = useState(null);
+    const savedValues ={
+        name:'Sherlock Holmes',
+        email:'detective@exmple.com',
+        channel:'Arthur Conan Doyle',
+        comments:'Welcome!',
+        address:'221b Baker Street',
+        social:{
+            facebook:'',
+            twitter:''
+        },
+        phoneNumbers:['',''],
+        phNumbers:['']
+    }
+    const initialValues ={
+        name:'',
+        email:'',
+        channel:'',
+        comments:'',
+        address:'',
+        social:{
+            facebook:'',
+            twitter:''
+        },
+        phoneNumbers:['',''],
+        phNumbers:['']
+    }
+    
+    const submitHandler=(values,onSubmitProps)=>{
+        console.dir(values);
+        {
+            //Set agin submit button to enable in case api assync called failed so that user can agin try to submit the form
+            setTimeout(()=>{
+                onSubmitProps.setSubmitting(false);
+            },3000)
+        }
+    
+    }
+    
+    const validationSchema =yup.object({
+        name:yup.string().required("Required!"),
+        email:yup.string().email('Email format is not valid!').required('Required!'),
+        channel:yup.string().required('Required!'),
+        comments:yup.string().required('Required!'),
+        address:yup.string().required('Required!'),
+        social:yup.object({
+            facebook:yup.string().url("Please enter a valid facebook url").required('Required!'),
+            twitter:yup.string().url("Please enter a valid twitter url").required('Required!')
+        }),
+        phoneNumbers:yup.array().of(
+            yup.string().min(10,"Must be more then 10 digit").required('Required!')
+        ),
+        phNumbers:yup.array().of(
+            yup.string().min(5,"Must be 5 digit").max(5,"Must be 5 digit").required('Required!')
+        )
+    })
+    
+    const validateComments =(value)=>{
+        let error
+        if(value !== 'My Comments')
+            error = 'Please Type => My Comments';
+        return error;
+    }
+    
+    //This code will run every time when we interact to the form
+    //and in the values property it has access to all attributes value 
+    const customValidation=(values)=>{
+        console.dir(values);
+        let errors ={};
+        if(values.comments !== values.channel){
+            errors.comments = 'It is not same to Channel Name!';
+        }
+        return errors;
+    }
     return (
         <Formik
-        initialValues={initialValues}
+        initialValues={formValue || initialValues}
         onSubmit={submitHandler}
         validationSchema={validationSchema}
         validate ={customValidation}
+        enableReinitialize
         >
         {
             formik =>{
@@ -171,6 +184,7 @@ function YoutubeForm1() {
                 </div>
 
                 <button type='submit' disabled={!(formik.isValid && formik.dirty) || formik.isSubmitting}>Submit</button>
+                <button onClick={()=>setFormValue(savedValues)}>Load Saved Data</button>
             </Form>
             
                 )
