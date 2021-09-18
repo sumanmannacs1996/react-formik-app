@@ -40,6 +40,10 @@ function YoutubeForm1() {
                 onSubmitProps.setSubmitting(false);
             },3000)
         }
+        {
+            //If form submited successfully then reset the form
+            setFormValue(null);
+        }
     
     }
     
@@ -88,7 +92,7 @@ function YoutubeForm1() {
         >
         {
             formik =>{
-                console.dir(formik);
+                //console.dir(formik);
                 return(
                     <Form>
                 <div className="form-control">
@@ -185,6 +189,7 @@ function YoutubeForm1() {
 
                 <button type='submit' disabled={!(formik.isValid && formik.dirty) || formik.isSubmitting}>Submit</button>
                 <button onClick={()=>setFormValue(savedValues)}>Load Saved Data</button>
+                <button type='reset' onClick={()=>setFormValue(null)}>Reset</button>
             </Form>
             
                 )
